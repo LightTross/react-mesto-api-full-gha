@@ -1,0 +1,15 @@
+.content {
+  width: 68.75%;
+  max-width: 880px;
+  margin: 0 auto;
+}
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .content {
+    width: 80%;
+ }
+}
+@media screen and (max-width: 767px) {
+  .content {
+    width: 88.125%;
+ }
+}

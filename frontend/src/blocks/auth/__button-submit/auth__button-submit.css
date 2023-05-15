@@ -1,0 +1,16 @@
+.auth__button-submit {
+  margin-top: 186px;
+  padding: 14px 0;
+  background-color: #fff;
+  color: #000;
+}
+
+.auth__button-submit:hover {
+  opacity: .85;
+}
+
+@media screen and (max-width: 767px) {
+  .auth__button-submit {
+    margin-top: 140px;
+ }
+}

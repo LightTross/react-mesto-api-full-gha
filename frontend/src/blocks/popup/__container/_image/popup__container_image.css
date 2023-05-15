@@ -1,0 +1,10 @@
+.popup__container_image {
+  position: relative;
+  min-width: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  max-width: 75vw;
+  max-height: 75vh;
+}

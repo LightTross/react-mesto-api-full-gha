@@ -1,0 +1,26 @@
+.profile__avatar-container {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.profile__avatar-container:hover .profile__update-avatar-button {
+  opacity: 1;
+}
+.profile__avatar-container::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  opacity: 0;
+  background: rgba(0, 0, 0, .8);
+  transition: opacity .3s linear;
+}
+
+.profile__avatar-container:hover::before {
+  opacity: 1;
+}

@@ -1,0 +1,27 @@
+.header__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  visibility: hidden;
+  background-color: transparent;
+  opacity: 1;
+  transition: all .3s linear;
+  cursor: pointer;
+  object-fit: cover;
+  object-position: top;
+  background-position: center;
+  margin-right: 27px;
+  border: none;
+}
+
+.header__button:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 767px) {
+  .header__button {
+    visibility: visible;
+ }
+}

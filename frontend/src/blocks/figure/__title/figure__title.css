@@ -1,0 +1,9 @@
+.figure__title {
+  margin: 10px 0 0 0;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 400;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #fff;
+  background-color: transparent;
+}
