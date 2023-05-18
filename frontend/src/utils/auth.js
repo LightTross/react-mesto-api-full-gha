@@ -1,5 +1,4 @@
 import { BASE_URL } from './utils';
-//export const BASE_URL  = 'http://localhost:27017'; //'https://api.talalayeva.mesto.nomoredomains.monster';
 
 const headers = {
   'Accept': 'application/json',

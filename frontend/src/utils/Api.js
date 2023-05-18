@@ -1,5 +1,4 @@
 import { BASE_URL } from './utils';
-//import { BASE_URL } from './auth';
 
 class Api {
   constructor(options) {
