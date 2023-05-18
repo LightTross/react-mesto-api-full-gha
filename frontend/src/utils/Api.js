@@ -1,8 +1,10 @@
 import { BASE_URL } from './utils';
+//import { BASE_URL } from './auth';
 
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
+    //this._headers = options.headers;
   }
 
   //получаем ответ на запрос
@@ -14,10 +16,14 @@ class Api {
   }
 
   //загрузка информации о пользователе с сервера
-  getUserInfo() {
+  getUserInfo(jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       credentials: 'include',
-      headers: this._headers
+      //headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      }
     })
       .then(res => this._checkResponse(res));
   }

@@ -1,4 +1,5 @@
 import { BASE_URL } from './utils';
+//export const BASE_URL  = 'http://localhost:27017'; //'https://api.talalayeva.mesto.nomoredomains.monster';
 
 const headers = {
   'Accept': 'application/json',
@@ -6,26 +7,26 @@ const headers = {
 };
 
 const checkResponse = (res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+  if (res.ok) {
+    return res.json();
   }
+  return Promise.reject(`Ошибка: ${res.status}`);
+};
 
 
-export const register = (email, password) => {
+export const register = ({email, password}) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
-    credentials: 'include',
+    //credentials: 'include',
     headers,
     body: JSON.stringify({email, password}),
   }).then((res) => checkResponse(res));
 };
 
-export const authorize = (email, password) => {
+export const authorize = ({email, password}) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
-    credentials: 'include',
+    //credentials: 'include',
     headers,
     body: JSON.stringify({email, password})
   }).then((res) => checkResponse(res));
@@ -37,7 +38,7 @@ export const checkToken = (token) => {
     credentials: 'include',
     headers: {
       ...headers,
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${token}`,
     },
   }).then((res) => checkResponse(res));
 };
