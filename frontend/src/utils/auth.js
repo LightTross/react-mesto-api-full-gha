@@ -7,6 +7,7 @@ const headers = {
 };
 
 const checkResponse = (res) => {
+  console.log(res)
   if (res.ok) {
     return res.json();
   }
@@ -14,7 +15,7 @@ const checkResponse = (res) => {
 };
 
 
-export const register = ({email, password}) => {
+export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     //credentials: 'include',
@@ -23,7 +24,7 @@ export const register = ({email, password}) => {
   }).then((res) => checkResponse(res));
 };
 
-export const authorize = ({email, password}) => {
+export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     //credentials: 'include',
@@ -37,8 +38,8 @@ export const checkToken = (token) => {
     method: 'GET',
     credentials: 'include',
     headers: {
-      ...headers,
-      authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     },
   }).then((res) => checkResponse(res));
 };

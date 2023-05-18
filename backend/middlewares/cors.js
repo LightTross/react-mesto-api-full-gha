@@ -4,8 +4,9 @@ const allowedCors = [
   'http://api.talalayeva.mesto.nomoredomains.monster',
   'https://api.talalayeva.mesto.nomoredomains.monster',
   'localhost:3000',
-  'http://localhost:3000',
-  'https://localhost:3000',
+  'http://localhost:3000/',
+  'https://localhost:3000/',
+  'http://localhost:27017/',
 ];
 
 module.exports = (req, res, next) => {

@@ -49,7 +49,7 @@ function App() {
       })
       .catch(error => console.log(`Ошибка: ${error}`));
     }
-  }, []);
+  }, [navigate]);
   
   //удаляем токен
   const handleSignOut = () => {
@@ -112,15 +112,17 @@ function App() {
 
   //получаем данные пользователя и карточки с сервера
   useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
+    //const jwt = localStorage.getItem('jwt');
 
-    Promise.all([api.getInitialItems(jwt), api.getUserInfo(jwt)])
-      .then(([initialItems, userData]) => {
-        setCurrentUser(userData);
-        setCards(initialItems);
-      })
-      .catch(error => console.log(`Ошибка: ${error}`));
-  }, [])
+    if(loggedIn) {
+      Promise.all([api.getInitialItems(/*jwt*/), api.getUserInfo(/*jwt*/)])
+        .then(([initialItems, userData]) => {
+          setCurrentUser(userData);
+          setCards(initialItems);
+        })
+        .catch(error => console.log(`Ошибка: ${error}`));
+    }
+  }, [loggedIn])
 
   //открываем попап обновления аватара
   const handleEditAvatarClick = () => {
@@ -173,11 +175,11 @@ function App() {
 
   //проставляем лайк
   const handleCardLike = (card) => {
-    const jwt = localStorage.getItem('jwt');
+    //const jwt = localStorage.getItem('jwt');
 
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked, jwt)
+    api.changeLikeCardStatus(card._id, !isLiked/*, jwt*/)
       .then((newCard) => {
         setCards(state => 
           state.map(c => c._id === card._id ? newCard : c));
@@ -187,11 +189,11 @@ function App() {
 
   //удаляем карточку
   const handleCardDelete = (card)  => {
-    const jwt = localStorage.getItem('jwt');
+    //const jwt = localStorage.getItem('jwt');
 
     setIsLoading(true);
 
-    api.deleteCard(card._id, jwt)
+    api.deleteCard(card._id/*, jwt*/)
       .then(() => {
         setCards(cards => cards.filter(c => c._id !== card._id));
         closeAllPopups();
@@ -208,11 +210,11 @@ function App() {
 
   //редактируем данные пользователя
   const handleUpdateUser = (user) => {
-    const jwt = localStorage.getItem('jwt');
+    //const jwt = localStorage.getItem('jwt');
 
     setIsLoading(true);
 
-    api.editProfile(user, jwt)
+    api.editProfile(user/*, jwt*/)
       .then(userInfo => {
         setCurrentUser(userInfo);
         closeAllPopups();
@@ -223,11 +225,11 @@ function App() {
 
   //редактируем аватар
   const handleUpdateAvatar = (user) => {
-    const jwt = localStorage.getItem('jwt');
+    //const jwt = localStorage.getItem('jwt');
 
     setIsLoading(true);
     
-    api.updateAvatar(user, jwt)
+    api.updateAvatar(user/*, jwt*/)
       .then(userInfo => {
         setCurrentUser(userInfo);
         closeAllPopups();
@@ -238,11 +240,11 @@ function App() {
 
   //добавляем новую карточку
   const handleAddPlaceSubmit = (newCard) => {
-    const jwt = localStorage.getItem('jwt');
+    //const jwt = localStorage.getItem('jwt');
 
     setIsLoading(true);
     
-    api.addNewItem(newCard, jwt)
+    api.addNewItem(newCard/*, jwt*/)
       .then(card => {
         setCards([card, ...cards]);
         closeAllPopups();

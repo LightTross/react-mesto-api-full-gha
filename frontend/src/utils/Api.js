@@ -4,7 +4,7 @@ import { BASE_URL } from './utils';
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
-    //this._headers = options.headers;
+    this._headers = options.headers;
   }
 
   //получаем ответ на запрос
@@ -16,37 +16,39 @@ class Api {
   }
 
   //загрузка информации о пользователе с сервера
-  getUserInfo(jwt) {
+  getUserInfo(/*jwt*/) {
     return fetch(`${this._baseUrl}/users/me`, {
       credentials: 'include',
-      //headers: this._headers
-      headers: {
+      headers: this._headers
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      }
+      }*/
     })
       .then(res => this._checkResponse(res));
   }
 
   //загрузка элементов с сервера
-  getInitialItems(jwt) {
+  getInitialItems(/*jwt*/) {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      }
+      }*/
+      headers: this._headers
     })
       .then(res => this._checkResponse(res));
   }
 
   //редактирование профиля
-  editProfile(data, jwt) {
+  editProfile(data/*, jwt*/) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      },
+      },*/
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -56,13 +58,14 @@ class Api {
   }
 
   //добавление нового элемента
-  addNewItem(data, jwt) {
+  addNewItem(data/*, jwt*/) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      },
+      },*/
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -72,37 +75,40 @@ class Api {
   }
 
   //удаление элемента
-  deleteCard(itemId, jwt) {
+  deleteCard(itemId/*, jwt*/) {
     return fetch(`${this._baseUrl}/cards/${itemId}`, {
       method: 'DELETE',
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      },
+      },*/
+      headers: this._headers,
     })
       .then(res => this._checkResponse(res));
   }
 
   //постановка и снятие лайка
-  changeLikeCardStatus(itemId, isLiked, jwt) {
+  changeLikeCardStatus(itemId, isLiked/*, jwt*/) {
     return fetch(`${this._baseUrl}/cards/${itemId}/likes`, {
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      },
+      },*/
+      headers: this._headers,
     })
       .then(res => this._checkResponse(res));
   }
 
   //обновление аватара пользователя
-  updateAvatar(user, jwt) {
+  updateAvatar(user/*, jwt*/) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${jwt}`,
-      },
+      },*/
+      headers: this._headers,
       body: JSON.stringify({
         avatar: user.avatar
       })
