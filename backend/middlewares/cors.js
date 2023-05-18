@@ -1,8 +1,9 @@
 const allowedCors = [
-  'http://talalayeva.mesto.nomoredomains.monster/',
-  'https://talalayeva.mesto.nomoredomains.monster/',
-  'http://api.talalayeva.mesto.nomoredomains.monster/',
-  'https://api.talalayeva.mesto.nomoredomains.monster/',
+  'http://talalayeva.mesto.nomoredomains.monster',
+  'https://talalayeva.mesto.nomoredomains.monster',
+  'http://api.talalayeva.mesto.nomoredomains.monster',
+  'https://api.talalayeva.mesto.nomoredomains.monster',
+  'localhost:3000',
   'http://localhost:3000',
   'https://localhost:3000',
 ];
