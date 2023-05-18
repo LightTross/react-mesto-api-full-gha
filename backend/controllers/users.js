@@ -81,7 +81,7 @@ module.exports.getUserById = (req, res, next) => {
       if (!user) {
         return next(new NotFoundError('Пользователь не найден'));
       }
-      return res.status(200).send(user);
+      return res.send(user);
     })
     .catch(next);
 };
@@ -94,7 +94,7 @@ module.exports.updateUser = (req, res, next) => {
     { name, about },
     { new: true, runValidators: true },
   )
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при обновлении профиля'));
@@ -111,7 +111,7 @@ module.exports.updateAvatar = (req, res, next) => {
     { avatar },
     { new: true, runValidators: true },
   )
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         return next(new BadRequestError('Переданы некорректные данные при обновлении аватара'));

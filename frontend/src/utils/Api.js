@@ -1,7 +1,8 @@
+import { BASE_URL } from './utils';
+
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
-    this._headers = options.headers;
   }
 
   //получаем ответ на запрос
@@ -15,37 +16,47 @@ class Api {
   //загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
       headers: this._headers
     })
       .then(res => this._checkResponse(res));
   }
 
   //загрузка элементов с сервера
-  getInitialItems() {
+  getInitialItems(jwt) {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      }
     })
       .then(res => this._checkResponse(res));
   }
 
   //редактирование профиля
-  editProfile(data) {
+  editProfile(data, jwt) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      },
       body: JSON.stringify({
         name: data.name,
         about: data.about
-      })
+      }),
     })
       .then(res => this._checkResponse(res));
   }
 
   //добавление нового элемента
-  addNewItem(data) {
+  addNewItem(data, jwt) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      },
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -55,28 +66,37 @@ class Api {
   }
 
   //удаление элемента
-  deleteCard(itemId) {
+  deleteCard(itemId, jwt) {
     return fetch(`${this._baseUrl}/cards/${itemId}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      },
     })
       .then(res => this._checkResponse(res));
   }
 
   //постановка и снятие лайка
-  changeLikeCardStatus(itemId, isLiked) {
+  changeLikeCardStatus(itemId, isLiked, jwt) {
     return fetch(`${this._baseUrl}/cards/${itemId}/likes`, {
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      },
     })
       .then(res => this._checkResponse(res));
   }
 
   //обновление аватара пользователя
-  updateAvatar(user) {
+  updateAvatar(user, jwt) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`,
+      },
       body: JSON.stringify({
         avatar: user.avatar
       })
@@ -87,11 +107,11 @@ class Api {
 
 //параметры для запроса к серверу
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-58',
+  baseUrl: BASE_URL,
   headers: {
-    authorization: '35d66a15-d267-44df-89c1-13d257cc7168',
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+  },
 });
 
 export default api;

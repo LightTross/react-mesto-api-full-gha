@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { regExp } = require('../utils/utils');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -11,7 +12,7 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: (v) => /^(ftp|http|https):\/\/[^ "]+$/.test(v),
+      validator: (v) => regExp.test(v),
       message: 'Неверный url адрес',
     },
   },

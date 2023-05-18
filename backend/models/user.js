@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 const bcrypt = require('bcryptjs');
 const { UnauthorizedError } = require('../errors/UnauthorizedError');
+const { regExp } = require('../utils/utils');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -33,7 +34,7 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     validate: {
-      validator: (v) => /^(ftp|http|https):\/\/[^ "]+$/.test(v),
+      validator: (v) => regExp.test(v),
       message: 'Неверный url адрес',
     },
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',

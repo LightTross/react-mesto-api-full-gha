@@ -76,7 +76,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена: невозможно убрать лайк'));
       }
-      return res.status(200).send(card);
+      return res.send(card);
     })
     .catch(next);
 };
