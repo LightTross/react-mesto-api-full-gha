@@ -2,7 +2,15 @@ import {useState, useEffect} from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import api from '../utils/Api';
+import {
+  getUserInfo,
+  getInitialItems,
+  editProfile,
+  addNewItem,
+  deleteCard,
+  changeLikeCardStatus,
+  updateAvatar
+} from '../utils/api';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -15,7 +23,7 @@ import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRouteElement from './ProtectedRoute';
-import * as auth from '../utils/auth';
+import auth from '../utils/auth';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -112,15 +120,13 @@ function App() {
 
   //получаем данные пользователя и карточки с сервера
   useEffect(() => {
-    //const jwt = localStorage.getItem('jwt');
-
     if(loggedIn) {
-      Promise.all([api.getInitialItems(/*jwt*/), api.getUserInfo(/*jwt*/)])
+      Promise.all([getInitialItems(), getUserInfo()])
         .then(([initialItems, userData]) => {
           setCurrentUser(userData);
           setCards(initialItems);
         })
-        .catch(error => console.log(`Ошибка: ${error}`));
+        .catch(error => console.log(`Ошибка: ${error}`))
     }
   }, [loggedIn])
 
@@ -175,11 +181,10 @@ function App() {
 
   //проставляем лайк
   const handleCardLike = (card) => {
-    //const jwt = localStorage.getItem('jwt');
 
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked/*, jwt*/)
+    changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards(state => 
           state.map(c => c._id === card._id ? newCard : c));
@@ -189,11 +194,9 @@ function App() {
 
   //удаляем карточку
   const handleCardDelete = (card)  => {
-    //const jwt = localStorage.getItem('jwt');
-
     setIsLoading(true);
 
-    api.deleteCard(card._id/*, jwt*/)
+    deleteCard(card._id)
       .then(() => {
         setCards(cards => cards.filter(c => c._id !== card._id));
         closeAllPopups();
@@ -210,11 +213,10 @@ function App() {
 
   //редактируем данные пользователя
   const handleUpdateUser = (user) => {
-    //const jwt = localStorage.getItem('jwt');
 
     setIsLoading(true);
 
-    api.editProfile(user/*, jwt*/)
+    editProfile(user)
       .then(userInfo => {
         setCurrentUser(userInfo);
         closeAllPopups();
@@ -225,11 +227,9 @@ function App() {
 
   //редактируем аватар
   const handleUpdateAvatar = (user) => {
-    //const jwt = localStorage.getItem('jwt');
-
     setIsLoading(true);
     
-    api.updateAvatar(user/*, jwt*/)
+    updateAvatar(user)
       .then(userInfo => {
         setCurrentUser(userInfo);
         closeAllPopups();
@@ -240,11 +240,10 @@ function App() {
 
   //добавляем новую карточку
   const handleAddPlaceSubmit = (newCard) => {
-    //const jwt = localStorage.getItem('jwt');
 
     setIsLoading(true);
     
-    api.addNewItem(newCard/*, jwt*/)
+    addNewItem(newCard)
       .then(card => {
         setCards([card, ...cards]);
         closeAllPopups();

@@ -1,128 +1,104 @@
-import { BASE_URL } from './utils';
+const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
 
-class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl;
-    this._headers = options.headers;
-  }
-
-  //получаем ответ на запрос
-  _checkResponse(res) {
+ //получаем ответ на запрос
+  export const checkResponse = (res) => {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
-  }
+}
 
-  //загрузка информации о пользователе с сервера
-  getUserInfo(/*jwt*/) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      credentials: 'include',
-      headers: this._headers
-      /*headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      }*/
-    })
-      .then(res => this._checkResponse(res));
-  }
+//загрузка информации о пользователе с сервера
+export const getUserInfo = () => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    }
+  })
+    .then((res) => checkResponse(res));
+}
 
-  //загрузка элементов с сервера
-  getInitialItems(/*jwt*/) {
-    return fetch(`${this._baseUrl}/cards`, {
-      /*headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      }*/
-      headers: this._headers
-    })
-      .then(res => this._checkResponse(res));
-  }
+//загрузка элементов с сервера
+export const getInitialItems = () => {
+  return fetch(`${baseUrl}/cards`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    }
+  })
+  .then((res) => checkResponse(res));
+}
 
-  //редактирование профиля
-  editProfile(data/*, jwt*/) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'PATCH',
-      /*headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      },*/
-      headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.about
-      }),
-    })
-      .then(res => this._checkResponse(res));
-  }
+//редактирование профиля
+export const editProfile = (data) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    },
+    body: JSON.stringify({
+      name: data.name,
+      about: data.about
+    }),
+  })
+    .then((res) => checkResponse(res));
+}
 
-  //добавление нового элемента
-  addNewItem(data/*, jwt*/) {
-    return fetch(`${this._baseUrl}/cards`, {
+//добавление нового элемента
+export const addNewItem = (data) => {
+    return fetch(`${baseUrl}/cards`, {
       method: 'POST',
-      /*headers: {
+      headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      },*/
-      headers: this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+      },
       body: JSON.stringify({
         name: data.name,
         link: data.link
       })
     })
-      .then(res => this._checkResponse(res));
+      .then((res) => checkResponse(res));
   }
 
   //удаление элемента
-  deleteCard(itemId/*, jwt*/) {
-    return fetch(`${this._baseUrl}/cards/${itemId}`, {
+  export const deleteCard = (itemId/*, jwt*/) => {
+    return fetch(`${baseUrl}/cards/${itemId}`, {
       method: 'DELETE',
-      /*headers: {
+      headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      },*/
-      headers: this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+      },
     })
-      .then(res => this._checkResponse(res));
+      .then((res) => checkResponse(res));
   }
 
   //постановка и снятие лайка
-  changeLikeCardStatus(itemId, isLiked/*, jwt*/) {
-    return fetch(`${this._baseUrl}/cards/${itemId}/likes`, {
+  export const changeLikeCardStatus = (itemId, isLiked) => {
+    return fetch(`${baseUrl}/cards/${itemId}/likes`, {
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      /*headers: {
+      headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      },*/
-      headers: this._headers,
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+      },
     })
-      .then(res => this._checkResponse(res));
+      .then((res) => checkResponse(res));
   }
 
-  //обновление аватара пользователя
-  updateAvatar(user/*, jwt*/) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      /*headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`,
-      },*/
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: user.avatar
-      })
+//обновление аватара пользователя
+export const updateAvatar = (user) => {
+  return fetch(`${baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+    },
+    body: JSON.stringify({
+      avatar: user.avatar
     })
-      .then(res => this._checkResponse(res));
-  }
+  })
+    .then((res) => checkResponse(res));
 }
-
-//параметры для запроса к серверу
-const api = new Api({
-  baseUrl: BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-  },
-});
-
-export default api;
