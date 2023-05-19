@@ -3,15 +3,14 @@ class Auth{
     this._url = options.baseUrl;
   }
 
-  _checkResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-
-  _request(url, options) {
-    return fetch(url, options).then(this._checkResponse);
+  checkToken(token) {
+    return this._request(this._url + '/users/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
   }
 
   register(email, password) {
@@ -36,14 +35,15 @@ class Auth{
     });
   }
 
-  checkToken(token) {
-    return this._request(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-    });
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
   }
 }
 
