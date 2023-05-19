@@ -12,11 +12,7 @@ import {
   updateAvatar
 } from '../utils/api';
 
-import {
-  register,
-  authorize,
-  checkToken
-} from '../utils/auth';
+import auth from '../utils/auth'
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -54,7 +50,8 @@ function App() {
     const jwt = localStorage.getItem('jwt');
 
     if(jwt) {
-      checkToken(jwt).then((data) => {
+      auth.checkToken(jwt).then((data) => {
+        console.log(data);
         if(data) {
           setLoggedIn(true);
           navigate('/');
@@ -90,7 +87,7 @@ function App() {
       return;
     }
 
-    register(values.email, values.password)
+    auth.register(values.email, values.password)
       .then(() => {
         setIsSuccessfully(true);
         navigate('/sign-in', { replace: true });
@@ -113,10 +110,10 @@ function App() {
     if(!values.email || !values.password) {
       return;
     }
-    authorize(values.email, values.password)
+    auth.authorize(values.email, values.password)
       .then(res => {
-        setLoggedIn(true);
         localStorage.setItem('jwt', res.jwt);
+        setLoggedIn(true);
         setAuthorizationEmail(values.email);
         navigate('/');
 

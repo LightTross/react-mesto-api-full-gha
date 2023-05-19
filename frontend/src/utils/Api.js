@@ -2,8 +2,6 @@ const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
 
  //получаем ответ на запрос
   export const checkResponse = (res) => {
-    console.log('checkResponse')
-    console.log(res)
     if (res.ok) {
       return res.json();
     }
@@ -19,11 +17,7 @@ export const getUserInfo = () => {
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     }
   })
-    .then((res) => {
-      console.log('res')
-      console.log(res)
-      checkResponse(res)}
-    );
+    .then((res) => checkResponse(res));
 }
 
 //загрузка элементов с сервера
