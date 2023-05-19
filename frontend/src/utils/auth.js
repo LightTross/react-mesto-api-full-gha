@@ -6,8 +6,6 @@ const headers = {
 };
 
 const checkResponse = (res) => {
-  console.log('res');
-  console.log(res);
   if (res.ok) {
     return res.json();
   }
@@ -34,8 +32,6 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = (token) => {
-  console.log('token');
-  console.log(token);
   return fetch(`${baseUrl}/users/me`, {
     method: 'GET',
     headers: {
