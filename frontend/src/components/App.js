@@ -11,6 +11,12 @@ import {
   changeLikeCardStatus,
   updateAvatar
 } from '../utils/api';
+
+import {
+  register,
+  authorize,
+  checkToken
+} from '../utils/auth';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -23,7 +29,7 @@ import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRouteElement from './ProtectedRoute';
-import auth from '../utils/auth';
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -48,11 +54,11 @@ function App() {
     const jwt = localStorage.getItem('jwt');
 
     if(jwt) {
-      auth.checkToken(jwt).then((res) => {
-        if(res) {
+      checkToken(jwt).then((data) => {
+        if(data) {
           setLoggedIn(true);
           navigate('/');
-          setAuthorizationEmail(res.data.email);
+          setAuthorizationEmail(data.email);
         }
       })
       .catch(error => console.log(`Ошибка: ${error}`));
@@ -72,7 +78,7 @@ function App() {
       return;
     }
 
-    auth.register(values.email, values.password)
+    register(values.email, values.password)
       .then(() => {
         setIsSuccessfully(true);
         navigate('/sign-in', { replace: true });
@@ -95,7 +101,7 @@ function App() {
     if(!values.email || !values.password) {
       return;
     }
-    auth.authorize(values.email, values.password)
+    authorize(values.email, values.password)
       .then(res => {
         setLoggedIn(true);
         localStorage.setItem('jwt', res.jwt);
