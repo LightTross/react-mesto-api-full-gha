@@ -64,6 +64,18 @@ function App() {
       .catch(error => console.log(`Ошибка: ${error}`));
     }
   }, [navigate]);
+
+  //получаем данные пользователя и карточки с сервера
+  useEffect(() => {
+    if(loggedIn) {
+      Promise.all([getInitialItems(), getUserInfo()])
+        .then(([initialItems, userData]) => {
+          setCurrentUser(userData);
+          setCards(initialItems);
+        })
+        .catch(error => console.log(`Ошибка: ${error}`))
+    }
+  }, [loggedIn]);
   
   //удаляем токен
   const handleSignOut = () => {
@@ -123,18 +135,6 @@ function App() {
   const handleMenuClick = () => {
     setMenuOpened(!menuOpened);
   };
-
-  //получаем данные пользователя и карточки с сервера
-  useEffect(() => {
-    if(loggedIn) {
-      Promise.all([getInitialItems(), getUserInfo()])
-        .then(([initialItems, userData]) => {
-          setCurrentUser(userData);
-          setCards(initialItems);
-        })
-        .catch(error => console.log(`Ошибка: ${error}`))
-    }
-  }, [loggedIn])
 
   //открываем попап обновления аватара
   const handleEditAvatarClick = () => {
