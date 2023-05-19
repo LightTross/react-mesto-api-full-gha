@@ -14,10 +14,8 @@ const {
 router.post('/signup', signUpValidation, createUser);
 router.post('/signin', signInValidation, login);
 
-router.use(auth);
-
-router.use('/users', require('./users'));
-router.use('/cards', require('./cards'));
+router.use('/users', auth, require('./users'));
+router.use('/cards', auth, require('./cards'));
 
 router.use('*', (req, res, next) => {
   next(new NotFoundError('Страница не найдена'));
