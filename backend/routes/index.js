@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { createUser, login } = require('../controllers/users');
 
-const auth = require('../middlewares/auth');
+// const auth = require('../middlewares/auth');
 
 const { NotFoundError } = require('../errors/errors');
 
@@ -14,7 +14,7 @@ const {
 router.post('/signup', signUpValidation, createUser);
 router.post('/signin', signInValidation, login);
 
-router.use(auth);
+// router.use(auth);
 
 router.use('/users', require('./users'));
 router.use('/cards', require('./cards'));
