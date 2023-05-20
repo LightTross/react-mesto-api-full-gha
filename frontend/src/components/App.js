@@ -66,8 +66,8 @@ function App() {
             })
             .catch(error => console.log(`Ошибка: ${error}`))
         }
-      }
-    )
+      })
+      .catch(() => { return false });
   }, [navigate]);
 
   //получаем данные пользователя и карточки с сервера
@@ -94,16 +94,16 @@ function App() {
   */
 
   const handleSignOut = () => {
-    auth.unauthorize()
+    auth.signout()
       .then(() => {
         setAuthorizationEmail('');
         setLoggedIn(false);
-        navigate('/sign-up');
       })
-      .catch(error => console.log(`Ошибка: ${error}`))
-      .finally(() => {
+      .catch(error => {
         handleInfoTooltip();
-      });
+        setIsSuccessfully(false);
+        console.log(`Ошибка: ${error}`)
+      })
   } 
 
   //обработка регистрации пользователя
@@ -232,7 +232,7 @@ function App() {
 
     api.deleteCard(card._id)
       .then(() => {
-        setCards(cards => cards.filter(c => c._id != card._id));
+        setCards(cards => cards.filter(c => c._id !== card._id));
         closeAllPopups();
       })
       .catch(error => console.log(`Ошибка: ${error}`))

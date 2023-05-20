@@ -40,8 +40,8 @@ export const checkToken = () => {
   }).then((res) => checkResponse(res));
 };
 
-export const unauthorize = () => {
-  return fetch(`${baseUrl}/`, {
+export const signout = () => {
+  return fetch(`${baseUrl}/signout`, {
     method: 'GET',
     credentials: 'include',
     headers,
