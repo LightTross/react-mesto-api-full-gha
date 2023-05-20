@@ -84,11 +84,26 @@ function App() {
   }, [loggedIn]);
   */
   //удаляем токен
+  /*
   const handleSignOut = () => {
     setAuthorizationEmail('');
-    localStorage.removeItem('jwt');
+    //localStorage.removeItem('jwt');
+    setLoggedIn(false);
     navigate('/sign-up');
   };
+  */
+
+  const handleSignOut = () => {
+    auth.unauthorize()
+      .then(() => {
+        setAuthorizationEmail('');
+        setLoggedIn(false);
+      })
+      .catch(error => console.log(`Ошибка: ${error}`))
+      .finally(() => {
+        handleInfoTooltip();
+      });
+  } 
 
   //обработка регистрации пользователя
   const handleUserRegistration = (values) => {

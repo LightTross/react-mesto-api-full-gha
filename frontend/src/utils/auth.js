@@ -39,3 +39,11 @@ export const checkToken = () => {
     headers,
   }).then((res) => checkResponse(res));
 };
+
+export const unauthorize = () => {
+  return fetch(baseUrl, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then((res) => checkResponse(res));
+};
