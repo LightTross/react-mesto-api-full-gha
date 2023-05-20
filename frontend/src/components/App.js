@@ -118,6 +118,7 @@ function App() {
       .then(() => {
         setAuthorizationEmail('');
         setLoggedIn(false);
+        navigate('/sign-in', { replace: true });
       })
       .catch(error => {
         handleInfoTooltip();

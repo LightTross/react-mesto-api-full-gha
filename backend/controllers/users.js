@@ -57,13 +57,8 @@ module.exports.login = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.signout = (req, res, next) => {
-  try {
-    console.log(res);
-    res.clearCookie('jwt').send({ message: 'Выход' });
-  } catch (error) {
-    next(error);
-  }
+module.exports.signout = (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Выход' });
 };
 
 // получаем информацию о текущем пользователе
