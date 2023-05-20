@@ -23,6 +23,15 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 // app.use(cors); // подключаем CORS
 app.use(cors({
   credentials: true,
+  origin: [
+    'http://talalayeva.mesto.nomoredomains.monster',
+    'https://talalayeva.mesto.nomoredomains.monster',
+    'http://api.talalayeva.mesto.nomoredomains.monster',
+    'https://api.talalayeva.mesto.nomoredomains.monster',
+    'localhost:3000',
+    'http://localhost:3000/',
+    'https://localhost:3000/',
+  ],
 }));
 
 app.use(cookieParser());
