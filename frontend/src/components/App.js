@@ -98,6 +98,7 @@ function App() {
       .then(() => {
         setAuthorizationEmail('');
         setLoggedIn(false);
+        navigate('/sign-up');
       })
       .catch(error => console.log(`Ошибка: ${error}`))
       .finally(() => {
@@ -215,7 +216,7 @@ function App() {
   //проставляем лайк
   const handleCardLike = (card) => {
 
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i._id == currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -231,7 +232,7 @@ function App() {
 
     api.deleteCard(card._id)
       .then(() => {
-        setCards(cards => cards.filter(c => c._id !== card._id));
+        setCards(cards => cards.filter(c => c._id != card._id));
         closeAllPopups();
       })
       .catch(error => console.log(`Ошибка: ${error}`))
