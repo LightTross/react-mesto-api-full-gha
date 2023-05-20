@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import api from '../utils/Api';
+import Api from '../utils/Api';
 import * as auth from '../utils/auth';
 import Header from './Header';
 import Main from './Main';
@@ -35,6 +35,14 @@ function App() {
   const [menuOpened, setMenuOpened] = useState(false);
   
   const navigate = useNavigate();
+
+  //параметры для запроса к серверу
+  const api = new Api({
+    baseUrl: 'https://api.talalayeva.mesto.nomoredomains.monster',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 
   //проверям токен и авторизовываем пользователя
   useEffect(() => {

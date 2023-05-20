@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -93,13 +93,3 @@ class Api {
       .then(res => this._checkResponse(res));
   }
 }
-
-//параметры для запроса к серверу
-const api = new Api({
-  baseUrl: 'https://api.talalayeva.mesto.nomoredomains.monster',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-export default api;
