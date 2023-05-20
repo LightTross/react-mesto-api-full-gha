@@ -51,12 +51,13 @@ function App() {
       })
       .catch(error => console.log(`Ошибка: ${error}`));
     }*/
+    console.log(localStorage.getItem('jwt'))
 
     api.getUserInfo()
       .then(data => {
         if (data) {
           setLoggedIn(true);
-          navigate('/');
+          navigate('/', {replace: true});
           setAuthorizationEmail(data.email);
 
           Promise.all([api.getInitialItems(), api.getUserInfo()])
@@ -145,7 +146,7 @@ function App() {
         if (res) {
           setLoggedIn(true);
           setAuthorizationEmail(values.email);
-          navigate('/');
+          navigate('/', {replace: true});
         }
         
         if (menuOpened) {
@@ -218,10 +219,13 @@ function App() {
 
     const isLiked = card.likes.some(i => i._id == currentUser._id);
 
+    console.log(isLiked)
+    console.log(card)
+
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards(state => 
-          state.map(c => c._id === card._id ? newCard : c));
+          state.map(c => c._id == card._id ? newCard : c));
       })
       .catch(error => console.log(`Ошибка: ${error}`));
   };
@@ -232,7 +236,7 @@ function App() {
 
     api.deleteCard(card._id)
       .then(() => {
-        setCards(cards => cards.filter(c => c._id !== card._id));
+        setCards(cards => cards.filter(c => c._id != card._id));
         closeAllPopups();
       })
       .catch(error => console.log(`Ошибка: ${error}`))
