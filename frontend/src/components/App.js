@@ -2,17 +2,8 @@ import {useState, useEffect} from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import {
-  getUserInfo,
-  getInitialItems,
-  editProfile,
-  addNewItem,
-  deleteCard,
-  changeLikeCardStatus,
-  updateAvatar
-} from '../utils/api';
-
-import auth from '../utils/auth'
+import api from '../utils/api';
+import * as auth from '../utils/auth';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -50,7 +41,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
 
     if(jwt) {
-      auth.checkToken(jwt).then((data) => {
+      auth.checkToken().then((data) => {
         console.log(data);
         if(data) {
           setLoggedIn(true);
@@ -65,7 +56,7 @@ function App() {
   //получаем данные пользователя и карточки с сервера
   useEffect(() => {
     if(loggedIn) {
-      Promise.all([getInitialItems(), getUserInfo()])
+      Promise.all([api.getInitialItems(), api.getUserInfo()])
         .then(([initialItems, userData]) => {
           setCurrentUser(userData);
           setCards(initialItems);
@@ -187,7 +178,7 @@ function App() {
 
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards(state => 
           state.map(c => c._id === card._id ? newCard : c));
@@ -199,7 +190,7 @@ function App() {
   const handleCardDelete = (card)  => {
     setIsLoading(true);
 
-    deleteCard(card._id)
+    api.deleteCard(card._id)
       .then(() => {
         setCards(cards => cards.filter(c => c._id !== card._id));
         closeAllPopups();
@@ -219,7 +210,7 @@ function App() {
 
     setIsLoading(true);
 
-    editProfile(user)
+    api.editProfile(user)
       .then(userInfo => {
         setCurrentUser(userInfo);
         closeAllPopups();
@@ -232,7 +223,7 @@ function App() {
   const handleUpdateAvatar = (user) => {
     setIsLoading(true);
     
-    updateAvatar(user)
+    api.updateAvatar(user)
       .then(userInfo => {
         setCurrentUser(userInfo);
         closeAllPopups();
@@ -246,7 +237,7 @@ function App() {
 
     setIsLoading(true);
     
-    addNewItem(newCard)
+    api.addNewItem(newCard)
       .then(card => {
         setCards([card, ...cards]);
         closeAllPopups();

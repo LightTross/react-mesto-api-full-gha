@@ -5,7 +5,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
-const cors = require('cors');
+const { cors } = require('./middlewares/cors');
 
 const { router } = require('./routes');
 
@@ -25,7 +25,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger); // подключаем логгер запросов
-app.use(cors());
+
+app.use(cors); // подключаем CORS
 
 app.get('/crash-test', () => {
   setTimeout(() => {

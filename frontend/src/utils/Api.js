@@ -1,104 +1,106 @@
-const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
+export const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
 
- //получаем ответ на запрос
-  export const checkResponse = (res) => {
+class Api {
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
+
+  //получаем ответ на запрос
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
-}
+  }
 
-//загрузка информации о пользователе с сервера
-export const getUserInfo = () => {
-  return fetch(`${baseUrl}/users/me`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-    }
-  })
-    .then((res) => checkResponse(res));
-}
+  //загрузка информации о пользователе с сервера
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+      .then(res => this._checkResponse(res));
+  }
 
-//загрузка элементов с сервера
-export const getInitialItems = () => {
-  return fetch(`${baseUrl}/cards`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-    }
-  })
-  .then((res) => checkResponse(res));
-}
+  //загрузка элементов с сервера
+  getInitialItems() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+      .then(res => this._checkResponse(res));
+  }
 
-//редактирование профиля
-export const editProfile = (data) => {
-  return fetch(`${baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-    },
-    body: JSON.stringify({
-      name: data.name,
-      about: data.about
-    }),
-  })
-    .then((res) => checkResponse(res));
-}
+  //редактирование профиля
+  editProfile(data) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about
+      }),
+      credentials: 'include',
+    })
+      .then(res => this._checkResponse(res));
+  }
 
-//добавление нового элемента
-export const addNewItem = (data) => {
-    return fetch(`${baseUrl}/cards`, {
+  //добавление нового элемента
+  addNewItem(data) {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link
-      })
+      }),
+      credentials: 'include',
     })
-      .then((res) => checkResponse(res));
+      .then(res => this._checkResponse(res));
   }
 
   //удаление элемента
-  export const deleteCard = (itemId/*, jwt*/) => {
-    return fetch(`${baseUrl}/cards/${itemId}`, {
+  deleteCard(itemId) {
+    return fetch(`${this._baseUrl}/cards/${itemId}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-      },
+      headers: this._headers,
+      credentials: 'include',
     })
-      .then((res) => checkResponse(res));
+      .then(res => this._checkResponse(res));
   }
 
   //постановка и снятие лайка
-  export const changeLikeCardStatus = (itemId, isLiked) => {
-    return fetch(`${baseUrl}/cards/${itemId}/likes`, {
+  changeLikeCardStatus(itemId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${itemId}/likes`, {
       method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-      },
+      headers: this._headers,
+      credentials: 'include',
     })
-      .then((res) => checkResponse(res));
+      .then(res => this._checkResponse(res));
   }
 
-//обновление аватара пользователя
-export const updateAvatar = (user) => {
-  return fetch(`${baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-    },
-    body: JSON.stringify({
-      avatar: user.avatar
+  //обновление аватара пользователя
+  updateAvatar(user/*, jwt*/) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: user.avatar
+      }),
+      credentials: 'include',
     })
-  })
-    .then((res) => checkResponse(res));
+      .then(res => this._checkResponse(res));
+  }
 }
+
+//параметры для запроса к серверу
+const api = new Api({
+  baseUrl: baseUrl,
+  headers: {
+    'Content-Type': 'application/json',
+    //'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+  },
+});
+
+export default api;
