@@ -1,5 +1,3 @@
-const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
-
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
@@ -17,6 +15,7 @@ class Api {
   //загрузка информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      method: 'GET',
       headers: this._headers,
       credentials: 'include',
     })
@@ -26,6 +25,7 @@ class Api {
   //загрузка элементов с сервера
   getInitialItems() {
     return fetch(`${this._baseUrl}/cards`, {
+      method: 'GET',
       headers: this._headers,
       credentials: 'include',
     })
@@ -81,7 +81,7 @@ class Api {
   }
 
   //обновление аватара пользователя
-  updateAvatar(user/*, jwt*/) {
+  updateAvatar(user) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -96,10 +96,9 @@ class Api {
 
 //параметры для запроса к серверу
 const api = new Api({
-  baseUrl: baseUrl,
+  baseUrl: 'https://api.talalayeva.mesto.nomoredomains.monster',
   headers: {
     'Content-Type': 'application/json',
-    //'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
   },
 });
 

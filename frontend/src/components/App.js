@@ -38,7 +38,7 @@ function App() {
 
   //проверям токен и авторизовываем пользователя
   useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
+    /*const jwt = localStorage.getItem('jwt');
 
     if(jwt) {
       auth.checkToken(jwt).then((data) => {
@@ -50,10 +50,28 @@ function App() {
         }
       })
       .catch(error => console.log(`Ошибка: ${error}`));
-    }
+    }*/
+
+    api.getUserInfo()
+      .then(data => {
+        if (data) {
+          setLoggedIn(true);
+          navigate('/');
+          setAuthorizationEmail(data.email);
+
+          Promise.all([api.getInitialItems(), api.getUserInfo()])
+            .then(([initialItems, userData]) => {
+              setCurrentUser(userData);
+              setCards(initialItems);
+            })
+            .catch(error => console.log(`Ошибка: ${error}`))
+        }
+      }
+    )
   }, [navigate]);
 
   //получаем данные пользователя и карточки с сервера
+  /*
   useEffect(() => {
     if(loggedIn) {
       Promise.all([api.getInitialItems(), api.getUserInfo()])
@@ -64,7 +82,7 @@ function App() {
         .catch(error => console.log(`Ошибка: ${error}`))
     }
   }, [loggedIn]);
-  
+  */
   //удаляем токен
   const handleSignOut = () => {
     setAuthorizationEmail('');
@@ -79,10 +97,12 @@ function App() {
     }
 
     auth.register(values.email, values.password)
-      .then(() => {
-        setIsSuccessfully(true);
-        navigate('/sign-in', { replace: true });
-
+      .then(res => {
+        if (res) {
+          setIsSuccessfully(true);
+          navigate('/sign-in', { replace: true });
+        }
+        
         if (menuOpened) {
           handleMenuClick();
         }
@@ -103,11 +123,15 @@ function App() {
     }
     auth.authorize(values.email, values.password)
       .then(res => {
-        localStorage.setItem('jwt', res.jwt);
-        setLoggedIn(true);
-        setAuthorizationEmail(values.email);
-        navigate('/');
 
+        console.log(res)
+        //localStorage.setItem('jwt', res.jwt);
+        if (res) {
+          setLoggedIn(true);
+          setAuthorizationEmail(values.email);
+          navigate('/');
+        }
+        
         if (menuOpened) {
           handleMenuClick();
         }

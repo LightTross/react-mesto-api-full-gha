@@ -1,6 +1,7 @@
 const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
 
 const headers = {
+  'Accept': 'application/json',
   'Content-Type': 'application/json',
 };
 
@@ -31,13 +32,15 @@ export const authorize = (email, password) => {
   }).then((res) => checkResponse(res));
 };
 
-export const checkToken = (token) => {
+export const checkToken = () => {
   return fetch(`${baseUrl}/users/me`, {
     method: 'GET',
     credentials: 'include',
-    headers: {
+    /*headers: {
+      headers,
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
-    },
+    },*/
+    headers,
   }).then((res) => checkResponse(res));
 };
