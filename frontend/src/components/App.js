@@ -38,60 +38,20 @@ function App() {
 
   //проверям токен и авторизовываем пользователя
   useEffect(() => {
-    /*const jwt = localStorage.getItem('jwt');
-
-    if(jwt) {
-      auth.checkToken(jwt).then((data) => {
-        console.log(data);
-        if(data) {
-          setLoggedIn(true);
-          navigate('/');
-          setAuthorizationEmail(data.email);
-        }
-      })
-      .catch(error => console.log(`Ошибка: ${error}`));
-    }*/
-
+    console.log('checkToken: '+loggedIn)
     auth.checkToken()
       .then(data => {
         if (data) {
           setLoggedIn(true);
           navigate('/', {replace: true});
           setAuthorizationEmail(data.email);
-
-          /*Promise.all([api.getInitialItems(), api.getUserInfo()])
-            .then(([initialItems, userData]) => {
-              setCurrentUser(userData);
-              setCards(initialItems);
-            })
-            .catch(error => console.log(`Ошибка: ${error}`))*/
+            }
           }
-        }
-      )
-      .catch(error => console.log(`Необходима авторизация. ${error}`))
-    /*
-    api.getUserInfo()
-      .then(data => {
-        if (data) {
-          setLoggedIn(true);
-          navigate('/', {replace: true});
-          setAuthorizationEmail(data.email);
-
-          console.log('after: ' + loggedIn)
-
-          Promise.all([api.getInitialItems(), api.getUserInfo()])
-            .then(([initialItems, userData]) => {
-              setCurrentUser(userData);
-              setCards(initialItems);
-            })
-            .catch(error => console.log(`Ошибка: ${error}`))
-        }
-      })
-      .catch(() => { return false });*/
+        )
+        .catch(() => { return false } /*error => console.log(`Необходима авторизация. ${error}`)*/)
   }, [navigate]);
 
   //получаем данные пользователя и карточки с сервера
-  
   useEffect(() => {
     if(loggedIn) {
       Promise.all([api.getInitialItems(), api.getUserInfo()])
@@ -101,30 +61,25 @@ function App() {
         })
         .catch(error => console.log(`Ошибка: ${error}`))
     }
-  }, [loggedIn]);
+  }, [loggedIn]);  
   
-  //удаляем токен
-  /*
-  const handleSignOut = () => {
-    setAuthorizationEmail('');
-    //localStorage.removeItem('jwt');
-    setLoggedIn(false);
-    navigate('/sign-up');
-  };
-  */
-
+  //деавторизовываем пользователя
   const handleSignOut = () => {
     auth.signout()
       .then(() => {
-        setAuthorizationEmail('');
+        console.log('signout before: ' + loggedIn, authorizationEmail)
+
         setLoggedIn(false);
+        setAuthorizationEmail('');
         navigate('/sign-in', { replace: true });
+
+        console.log('signout after: ' + loggedIn, authorizationEmail)
       })
       .catch(error => {
         handleInfoTooltip();
         setIsSuccessfully(false);
         console.log(`Ошибка: ${error}`)
-      })
+      });
   } 
 
   //обработка регистрации пользователя
@@ -163,6 +118,7 @@ function App() {
 
         //localStorage.setItem('jwt', res.jwt);
         if (res) {
+          console.log('auth: '+loggedIn)
           setLoggedIn(true);
           setAuthorizationEmail(values.email);
           navigate('/', {replace: true});
@@ -251,7 +207,7 @@ function App() {
 
     api.deleteCard(card._id)
       .then(() => {
-        setCards(cards => cards.filter(c => c._id != card._id));
+        setCards(cards => cards.filter(c => c._id !== card._id));
         closeAllPopups();
       })
       .catch(error => console.log(`Ошибка: ${error}`))
