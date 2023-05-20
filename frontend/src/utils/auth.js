@@ -1,4 +1,4 @@
-import { baseUrl } from './api';
+const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
 
 const headers = {
   'Content-Type': 'application/json',

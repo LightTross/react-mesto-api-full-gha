@@ -1,4 +1,4 @@
-export const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
+const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
 
 class Api {
   constructor(options) {
