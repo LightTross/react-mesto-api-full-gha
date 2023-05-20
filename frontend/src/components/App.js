@@ -38,7 +38,6 @@ function App() {
 
   //проверям токен и авторизовываем пользователя
   useEffect(() => {
-    console.log('checkToken: '+loggedIn)
     auth.checkToken()
       .then(data => {
         if (data) {
@@ -48,8 +47,8 @@ function App() {
             }
           }
         )
-        .catch(() => { return false } /*error => console.log(`Необходима авторизация. ${error}`)*/)
-  }, [navigate]);
+        .catch(() => { return false })
+  }, []);
 
   //получаем данные пользователя и карточки с сервера
   useEffect(() => {
@@ -67,13 +66,9 @@ function App() {
   const handleSignOut = () => {
     auth.signout()
       .then(() => {
-        console.log('signout before: ' + loggedIn, authorizationEmail)
-
         setLoggedIn(false);
         setAuthorizationEmail('');
         navigate('/sign-in', { replace: true });
-
-        console.log('signout after: ' + loggedIn, authorizationEmail)
       })
       .catch(error => {
         handleInfoTooltip();
@@ -118,7 +113,6 @@ function App() {
 
         //localStorage.setItem('jwt', res.jwt);
         if (res) {
-          console.log('auth: '+loggedIn)
           setLoggedIn(true);
           setAuthorizationEmail(values.email);
           navigate('/', {replace: true});

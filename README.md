@@ -8,7 +8,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.21.246
+IP 158.160.21.246
 
 Frontend http://talalayeva.mesto.nomoredomains.monster/
 

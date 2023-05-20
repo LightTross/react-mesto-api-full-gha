@@ -39,8 +39,8 @@ export const checkToken = () => {
   }).then((res) => checkResponse(res))
 };
 
-export const signout = () => {
-  return fetch(`${baseUrl}/signout`, {
+export const signout = async () => {
+  return await fetch(`${baseUrl}/signout`, {
     method: 'GET',
     credentials: 'include',
     headers,
