@@ -36,11 +36,6 @@ export const checkToken = () => {
   return fetch(`${baseUrl}/users/me`, {
     method: 'GET',
     credentials: 'include',
-    /*headers: {
-      headers,
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },*/
     headers,
   }).then((res) => checkResponse(res));
 };
