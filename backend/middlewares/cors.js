@@ -6,7 +6,6 @@ const allowedCors = [
   'localhost:3000',
   'http://localhost:3000/',
   'https://localhost:3000/',
-  'http://localhost:27017/',
 ];
 
 module.exports = (req, res, next) => {
@@ -17,6 +16,7 @@ module.exports = (req, res, next) => {
 
   // проверяем, что источник запроса есть среди разрешённых
   if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Origin', origin);
   }
 

@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import api from '../utils/api';
+import api from '../utils/Api';
 import * as auth from '../utils/auth';
 import Header from './Header';
 import Main from './Main';
@@ -41,7 +41,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
 
     if(jwt) {
-      auth.checkToken().then((data) => {
+      auth.checkToken(jwt).then((data) => {
         console.log(data);
         if(data) {
           setLoggedIn(true);
