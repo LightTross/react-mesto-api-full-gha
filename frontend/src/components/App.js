@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
@@ -326,6 +326,7 @@ function App() {
           />
           <Route path='/sign-up' element={<Register onRegister={handleUserRegistration} />}/>
           <Route path='/sign-in' element={<Login onLogin={handleUserAuthorization} />}/>
+          <Route path="*" element={ loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" /> }/>
         </Routes>
         <Footer />
         <EditProfilePopup 
