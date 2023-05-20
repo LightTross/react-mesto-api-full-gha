@@ -51,14 +51,33 @@ function App() {
       })
       .catch(error => console.log(`Ошибка: ${error}`));
     }*/
-    console.log(localStorage.getItem('jwt'))
 
+    auth.checkToken()
+      .then(data => {
+        if (data) {
+          setLoggedIn(true);
+          navigate('/', {replace: true});
+          setAuthorizationEmail(data.email);
+
+          /*Promise.all([api.getInitialItems(), api.getUserInfo()])
+            .then(([initialItems, userData]) => {
+              setCurrentUser(userData);
+              setCards(initialItems);
+            })
+            .catch(error => console.log(`Ошибка: ${error}`))*/
+          }
+        }
+      )
+      .catch(error => console.log(`Необходима авторизация. ${error}`))
+    /*
     api.getUserInfo()
       .then(data => {
         if (data) {
           setLoggedIn(true);
           navigate('/', {replace: true});
           setAuthorizationEmail(data.email);
+
+          console.log('after: ' + loggedIn)
 
           Promise.all([api.getInitialItems(), api.getUserInfo()])
             .then(([initialItems, userData]) => {
@@ -68,11 +87,11 @@ function App() {
             .catch(error => console.log(`Ошибка: ${error}`))
         }
       })
-      .catch(() => { return false });
+      .catch(() => { return false });*/
   }, [navigate]);
 
   //получаем данные пользователя и карточки с сервера
-  /*
+  
   useEffect(() => {
     if(loggedIn) {
       Promise.all([api.getInitialItems(), api.getUserInfo()])
@@ -83,7 +102,7 @@ function App() {
         .catch(error => console.log(`Ошибка: ${error}`))
     }
   }, [loggedIn]);
-  */
+  
   //удаляем токен
   /*
   const handleSignOut = () => {
@@ -141,7 +160,6 @@ function App() {
     auth.authorize(values.email, values.password)
       .then(res => {
 
-        console.log(res)
         //localStorage.setItem('jwt', res.jwt);
         if (res) {
           setLoggedIn(true);
@@ -217,16 +235,11 @@ function App() {
   //проставляем лайк
   const handleCardLike = (card) => {
 
-    const isLiked = card.likes.some(i => i._id == currentUser._id);
-
-    console.log(currentUser)
-    console.log(card.likes)
-    console.log(card)
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards(state => 
-          state.map(c => c._id == card._id ? newCard : c));
+        setCards(state => state?.map(c => c._id === card._id ? newCard : c)) 
       })
       .catch(error => console.log(`Ошибка: ${error}`));
   };
