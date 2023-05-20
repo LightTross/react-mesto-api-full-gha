@@ -68,7 +68,7 @@ function App() {
       .then(() => {
         setLoggedIn(false);
         setAuthorizationEmail('');
-        navigate('/sign-in', { replace: true });
+        navigate('/signin', { replace: true });
       })
       .catch(error => {
         handleInfoTooltip();
@@ -87,7 +87,7 @@ function App() {
       .then(res => {
         if (res) {
           setIsSuccessfully(true);
-          navigate('/sign-in', { replace: true });
+          navigate('/signin', { replace: true });
         }
         
         if (menuOpened) {
@@ -294,9 +294,9 @@ function App() {
               />
             }
           />
-          <Route path='/sign-up' element={<Register onRegister={handleUserRegistration} />}/>
-          <Route path='/sign-in' element={<Login onLogin={handleUserAuthorization} />}/>
-          <Route path="*" element={ loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" /> }/>
+          <Route path='/signup' element={<Register onRegister={handleUserRegistration} />}/>
+          <Route path='/signin' element={<Login onLogin={handleUserAuthorization} />}/>
+          <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/signin" />}/>
         </Routes>
         <Footer />
         <EditProfilePopup 

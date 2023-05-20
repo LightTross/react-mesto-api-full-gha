@@ -12,7 +12,7 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
         {email && <p className='header__email'>{email}</p>}
         <Routes>
           <Route
-            path='/sign-up'
+            path='/signup'
             element={
               <Link className='header__link' onClick={onMenuClick} to='/sign-in'>
                 Войти
@@ -20,7 +20,7 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
             }
           />
           <Route
-            path='/sign-in'
+            path='/signin'
             element={
               <Link className='header__link' onClick={onMenuClick} to='/sign-up'>
                 Регистрация
@@ -30,7 +30,7 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
           <Route
             path='/'
             element={
-              <Link className='header__link header__link_exit' onClick={() => {onSignOut(); onMenuClick();}} to='/sign-in'>
+              <Link className='header__link header__link_exit' onClick={() => {onSignOut(); onMenuClick();}} to='/signin'>
                 Выйти
               </Link>
             }
@@ -51,17 +51,17 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
           { email && <p className='header__email'>{email}</p> }
           <Routes>
             <Route
-              path='/sign-up'
+              path='/signup'
               element={
-                <Link className='header__link' to='/sign-in'>
+                <Link className='header__link' to='/signin'>
                   Войти
                 </Link>
               }
             />
             <Route
-              path='/sign-in'
+              path='/signin'
               element={
-                <Link className='header__link' to='/sign-up'>
+                <Link className='header__link' to='/signup'>
                   Регистрация
                 </Link>
               }
@@ -69,7 +69,7 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
             <Route
               path='/'
               element={
-                <Link className='header__link header__link_exit' onClick={onSignOut} to='/sign-in'>
+                <Link className='header__link header__link_exit' onClick={onSignOut} to='/signin'>
                   Выйти
                 </Link>
               }

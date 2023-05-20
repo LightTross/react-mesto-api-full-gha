@@ -48,7 +48,7 @@ const Register = ({onRegister, onSubmitClick}) => {
           >Зарегистрироваться</button>  
         </form>
       </div>
-      <Link to='/sign-in' className='auth__link'>Уже зарегистрированы? Войти</Link>
+      <Link to='/signin' className='auth__link'>Уже зарегистрированы? Войти</Link>
     </> 
   );
 };
