@@ -41,7 +41,7 @@ export const checkToken = () => {
 };
 
 export const unauthorize = () => {
-  return fetch(`${baseUrl}/signout`, {
+  return fetch(baseUrl, {
     method: 'GET',
     credentials: 'include',
     headers,

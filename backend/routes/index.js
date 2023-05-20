@@ -13,7 +13,7 @@ const {
 
 router.post('/signup', signUpValidation, createUser);
 router.post('/signin', signInValidation, login);
-router.get('/signout', signout);
+router.get('/', signout);
 
 router.use(auth);
 
