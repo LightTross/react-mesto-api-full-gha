@@ -7,7 +7,6 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
-// const { cors } = require('./middlewares/cors');
 const cors = require('cors');
 
 const { router } = require('./routes');
@@ -16,11 +15,11 @@ const { serverError } = require('./middlewares/serverError');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 
-mongoose.connect(MONGO_URL);
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb');
 
 // app.use(cors); // подключаем CORS
 app.use(cors({
