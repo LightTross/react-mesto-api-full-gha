@@ -31,14 +31,6 @@ export const authorize = (email, password) => {
   }).then((res) => checkResponse(res));
 };
 
-/*export const checkToken = () => {
-  return fetch(`${baseUrl}/users/me`, {
-    method: 'GET',
-    credentials: 'include',
-    headers,
-  }).then((res) => checkResponse(res))
-};*/
-
 export const checkToken = () => {
   return fetch(`${baseUrl}/check`, {
     method: 'GET',

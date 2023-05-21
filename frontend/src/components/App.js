@@ -128,8 +128,6 @@ function App() {
     }
     auth.authorize(values.email, values.password)
       .then(res => {
-
-        //localStorage.setItem('jwt', res.jwt);
         if (res) {
           setLoggedIn(true);
           setAuthorizationEmail(values.email);
@@ -314,7 +312,6 @@ function App() {
           />
           <Route path='/signup' element={<Register onRegister={handleUserRegistration} />}/>
           <Route path='/signin' element={<Login onLogin={handleUserAuthorization} />}/>
-          <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/signin" />}/>
         </Routes>
         <Footer />
         <EditProfilePopup 
