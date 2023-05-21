@@ -14,7 +14,7 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
           <Route
             path='/signup'
             element={
-              <Link className='header__link' onClick={onMenuClick} to='/sign-in'>
+              <Link className='header__link' onClick={onMenuClick} to='/signin'>
                 Войти
               </Link>
             }
@@ -22,7 +22,7 @@ function Header({email, onSignOut, menuOpened, onMenuClick}) {
           <Route
             path='/signin'
             element={
-              <Link className='header__link' onClick={onMenuClick} to='/sign-up'>
+              <Link className='header__link' onClick={onMenuClick} to='/signup'>
                 Регистрация
               </Link>
             }
