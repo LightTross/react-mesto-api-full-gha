@@ -54,6 +54,7 @@ function App() {
           //navigate('/signin', {replace: true});
         } else if (data.message === 'Успешная проверка') {
           setLoggedIn(true);
+          setAuthorizationEmail(data.email);
           navigate('/', {replace: true});
         }
       })
