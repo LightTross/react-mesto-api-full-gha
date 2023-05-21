@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useCallback, useState, useEffect} from 'react';
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -45,18 +45,28 @@ function App() {
   });
 
   //проверям токен и авторизовываем пользователя
-  useEffect(() => {
+  const handleCheckCookie = useCallback(() => {
     auth.checkToken()
       .then(data => {
-        if (data) {
+        if (data.message === 'Необходима авторизация') {
+          setLoggedIn(false);
+          setAuthorizationEmail('');
+          navigate('/signin', {replace: true});
+        } else if (data.message === 'Успешная проверка') {
           setLoggedIn(true);
-          navigate('/', {replace: true});
           setAuthorizationEmail(data.email);
-            }
-          }
-        )
-        .catch(() => { return false })
-  }, []);
+          navigate('/', {replace: true});
+        }
+      })
+      .catch(error => { 
+        setLoggedIn(false); 
+        console.log(`Ошибка: ${error}`)
+      })
+    }, []);
+
+  useEffect(() => {
+    handleCheckCookie()
+  }, [handleCheckCookie]);
 
   //получаем данные пользователя и карточки с сервера
   useEffect(() => {

@@ -8,6 +8,7 @@ const {
   NotFoundError,
   ConflictError,
   BadRequestError,
+  UnauthorizedError,
 } = require('../errors/errors');
 
 // создаем пользователя
@@ -59,6 +60,21 @@ module.exports.login = (req, res, next) => {
 
 module.exports.signout = (req, res) => {
   res.clearCookie('jwt').send({ message: 'Выход' });
+};
+
+// провека на куки
+module.exports.checkCookie = (req, res) => {
+  const cookie = req.cookies;
+  if (!cookie) {
+    throw new UnauthorizedError('Необходима авторизация');
+  }
+  const token = cookie.jwt;
+  try {
+    jwt.verify(token, NODE_ENV ? JWT_SECRET : 'some-secret-key');
+    res.send({ message: 'Успешная проверка' });
+  } catch (err) {
+    res.send({ message: 'Необходима авторизация' });
+  }
 };
 
 // получаем информацию о текущем пользователе
