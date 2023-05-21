@@ -312,6 +312,7 @@ function App() {
           />
           <Route path='/signup' element={<Register onRegister={handleUserRegistration} />}/>
           <Route path='/signin' element={<Login onLogin={handleUserAuthorization} />}/>
+          <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/signin" />}/>
         </Routes>
         <Footer />
         <EditProfilePopup 
