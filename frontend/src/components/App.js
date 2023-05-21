@@ -51,10 +51,8 @@ function App() {
         if (data.message === 'Необходима авторизация') {
           setLoggedIn(false);
           setAuthorizationEmail('');
-          //navigate('/signin', {replace: true});
         } else if (data.message === 'Успешная проверка') {
           setLoggedIn(true);
-          setAuthorizationEmail(data.email);
           navigate('/', {replace: true});
         }
       })
@@ -75,6 +73,7 @@ function App() {
         .then(([initialItems, userData]) => {
           setCurrentUser(userData);
           setCards(initialItems);
+          setAuthorizationEmail(userData.email);
         })
         .catch(error => console.log(`Ошибка: ${error}`))
     }
