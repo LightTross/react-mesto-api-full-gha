@@ -10,6 +10,6 @@
 
 IP 158.160.21.246
 
-Frontend http://talalayeva.mesto.nomoredomains.monster/
+Frontend https://talalayeva.mesto.nomoredomains.monster/
 
-Backend http://talalayeva.mesto.nomoredomains.monster/
+Backend https://api.talalayeva.mesto.nomoredomains.monster/
