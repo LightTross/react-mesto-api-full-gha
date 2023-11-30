@@ -1,4 +1,4 @@
-import {useEffect } from 'react';
+import { useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 import useFormAndValidation from '../hooks/useFormAndValidation';
 
@@ -18,7 +18,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading}) {
     if (!isOpen) {
       resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen, resetForm]);
 
 
   return (

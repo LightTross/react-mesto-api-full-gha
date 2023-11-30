@@ -1,3 +1,9 @@
+###Дополнительно развертывание
+PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb'
+Используется: Node.js, process.env, bcryptjs, body-parser, celebrate, cookie-parser, cors, dotenv, express, winston, express-winston, jsonwebtoken, mongoose, validator
+
+<<<<<<< HEAD
+
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
 # **Проект Mesto фронтенд + бэкенд**
 Проектная работа от Яндекс Практикума

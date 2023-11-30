@@ -18,7 +18,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, onLoading}) {
     if (!isOpen) {
       resetForm();
     }
-  }, [currentUser, isOpen]);
+  }, [currentUser, isOpen, resetForm, setValues, setIsValid]);
 
   function handleSubmit(e) {
     e.preventDefault();

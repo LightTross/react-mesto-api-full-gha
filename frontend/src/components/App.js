@@ -1,5 +1,5 @@
-import {useCallback, useState, useEffect} from 'react';
-import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
+import React, {useCallback, useState, useEffect} from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Api from '../utils/Api';
@@ -38,7 +38,7 @@ function App() {
 
   //параметры для запроса к серверу
   const api = new Api({
-    baseUrl: 'https://api.talalayeva.mesto.nomoredomains.monster',
+    baseUrl: 'https://api2.demo.mycaptcha.ru',
     headers: {
       'Content-Type': 'application/json',
     },

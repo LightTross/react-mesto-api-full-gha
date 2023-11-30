@@ -24,10 +24,10 @@ mongoose.connect(MONGO_URL);
 app.use(cors({
   credentials: true,
   origin: [
-    'http://talalayeva.mesto.nomoredomains.monster',
-    'https://talalayeva.mesto.nomoredomains.monster',
-    'http://api.talalayeva.mesto.nomoredomains.monster',
-    'https://api.talalayeva.mesto.nomoredomains.monster',
+    'http://front2.demo.mycaptcha.ru',
+    'https://front2.demo.mycaptcha.ru',
+    'http://api2.demo.mycaptcha.ru',
+    'https://api2.demo.mycaptcha.ru',
     'localhost:3000',
     'http://localhost:3000/',
     'https://localhost:3000/',

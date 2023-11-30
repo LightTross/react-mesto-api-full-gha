@@ -1,4 +1,4 @@
-const baseUrl  = 'https://api.talalayeva.mesto.nomoredomains.monster';
+const baseUrl  = 'https://api2.demo.mycaptcha.ru';
 
 const headers = {
   'Accept': 'application/json',
