@@ -1,7 +1,3 @@
-###Дополнительно развертывание
-PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb'
-Используется: Node.js, process.env, bcryptjs, body-parser, celebrate, cookie-parser, cors, dotenv, express, winston, express-winston, jsonwebtoken, mongoose, validator
-
 <<<<<<< HEAD
 
 [![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
@@ -12,8 +8,8 @@ PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/mestodb'
 --------------------
 В предпоследней работе я  настроила express-сервер на 3000 порту. Прописала подключение к серверу MongoDB. Создала схемы и модели для пользователей и карточек. Прописала необходимые роуты. В последней работе я добавила регистрацию по почте и поролю, прописала валидацию, захешировала пароль и защитила авторизацией все маршруты, кроме страницы регистрации и логина. Все запросы я тестировала в Postman.
 
-### Ссылка на репозиторий:
-[https://github.com/LightTross/express-mesto-gha]
+### Ссылка на backend:
+[https://api2.demo.mycaptcha.ru]
 
 ## Директории
 -------------
