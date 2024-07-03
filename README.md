@@ -35,6 +35,8 @@ Frontend https://front2.demo.mycaptcha.ru
 
 Backend https://api2.demo.mycaptcha.ru
 
+IP 95.131.147.55
+
 ### Инструкция по развёртыванию:
 --------------------------------
 Клонируем репозиторий через ssh:
